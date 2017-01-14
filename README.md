@@ -26,6 +26,12 @@ const char* ssid = "**********"; // Wi-FiアクセスポイントのSSID
 const char* password = "**********"; // パスワード
 ```
 
+### See also
+
+回路図とパーツリストはブログ記事を参照してください。
+
+[ミニマルなIRKitクローンを作ってiOSから家電を制御する : Eleclog.](http://eleclog.quitsq.com/2016/09/minirum.html)
+
 ## Example Requests
 
 **GET /messages**

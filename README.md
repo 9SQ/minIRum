@@ -1,4 +1,5 @@
-#minIRum
+minIRum
+======
 
 A minimal implementation of infrared sender/receiver like IRKit by ESP8266
 

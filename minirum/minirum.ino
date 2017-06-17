@@ -26,18 +26,24 @@ void handleMessages() {
     if (root != NULL) {
       aJsonObject* freq = aJson.getObjectItem(root, "freq");
       aJsonObject* data = aJson.getObjectItem(root, "data");
-      const int d_size = aJson.getArraySize(data);
-      unsigned int rawData[d_size];
-      for (int i = 0; i < d_size; i++) {
-        aJsonObject* d_int = aJson.getArrayItem(data, i);
-        rawData[i] = d_int->valueint;
+      if (freq != NULL && data != NULL) {
+        const int d_size = aJson.getArraySize(data);
+        unsigned int rawData[d_size];
+        for (int i = 0; i < d_size; i++) {
+          aJsonObject* d_int = aJson.getArrayItem(data, i);
+          rawData[i] = d_int->valueint;
+        }
+        irsend.sendRaw(rawData, d_size, freq->valueint);
+        irrecv.enableIRIn();
+        req = "";
+        aJson.deleteItem(root);
+        webServer.send(200, "text/plain", "ok");
+      } else {
+        webServer.send(400, "text/plain", "Invalid JSON format");
       }
-      irsend.sendRaw(rawData, d_size, freq->valueint);
-      irrecv.enableIRIn();
-      req = "";
-      aJson.deleteItem(root);
+    } else {
+      webServer.send(400, "text/plain", "Request body is empty");
     }
-    webServer.send(200, "text/plain", "ok");
   }
   else if (webServer.method() == HTTP_GET) {
     String s = "{\"format\":\"raw\",\"freq\":38,\"data\":[";

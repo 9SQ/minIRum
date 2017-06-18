@@ -18,6 +18,8 @@ Maybe it will work on other ESP* boards.
 * GPIO 12 - Infrared LED
 * GPIO 14 - Infrared receiver
 
+![schematic](https://raw.githubusercontent.com/9SQ/minIRum/master/schematic.png)
+
 赤外線リモコン受信モジュールは[OSRB38C9AA](http://akizukidenshi.com/catalog/g/gI-04659/)などの3.3V駆動可能のものを利用します
 
 以下の2か所を適宜変更
@@ -27,6 +29,8 @@ const char* ssid = "**********"; // Wi-FiアクセスポイントのSSID
 const char* password = "**********"; // パスワード
 ```
 
+電源を入れると無線LANアクセスポイントに自動的に接続し、DHCPによりIPアドレスを取得します。
+
 ### See also
 
 回路図とパーツリストはブログ記事を参照してください。
@@ -34,6 +38,8 @@ const char* password = "**********"; // パスワード
 [ミニマルなIRKitクローンを作ってiOSから家電を制御する : Eleclog.](http://eleclog.quitsq.com/2016/09/minirum.html)
 
 ## Example Requests
+
+mDNSに対応している場合 minirum-[MACアドレスの下位3オクテット].local のアドレスで接続できます。
 
 **GET /messages**
 
@@ -58,6 +64,12 @@ Content-Length: 2
 Connection: close
 Access-Control-Allow-Origin: *
 ```
+
+### simple web console
+
+ブラウザでroot URLにアクセスすると簡易的なコンソールが利用できます。
+
+![webconsole](https://raw.githubusercontent.com/9SQ/minIRum/master/webconsole.png)
 
 ## Requirements
 

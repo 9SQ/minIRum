@@ -54,6 +54,15 @@ void handleMessages() {
   }
 }
 
+void handleIndex() {
+  String s = "<html lang=\"en\"><head><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>minIRum</title><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css\" /><script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script><script src=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js\"></script></head><body><div class=\"container\"><div class=\"row\"><div class=\"col-md-12\"><h1>minIRum console <small>";
+  s += localName;
+  s += ".local</small></h1><p>IP address: ";
+  s += String(WiFi.localIP()[0]) + "." + String(WiFi.localIP()[1]) + "." + String(WiFi.localIP()[2]) + "." + String(WiFi.localIP()[3]);
+  s += "</p><hr><div class=\"form-group\"><textarea class=\"form-control\" id=\"message\" rows=\"10\"></textarea></div><button class=\"btn btn-primary\" id=\"get\">GET</button> <button class=\"btn btn-success\" id=\"post\">POST</button></div></div><script>var xhr = new XMLHttpRequest();var textarea = document.getElementById(\"message\");document.getElementById(\"get\").addEventListener(\"click\", function () {xhr.open('GET', '/messages', true);xhr.onreadystatechange = function() {if(xhr.readyState == 4) {textarea.value =xhr.responseText;}};xhr.send(null);});document.getElementById(\"post\").addEventListener(\"click\", function () {data = textarea.value;xhr.open('POST', '/messages', true);xhr.onreadystatechange = function() {if(xhr.readyState == 4) {alert(xhr.responseText);}};xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');xhr.send(data);});</script></body></html>";
+  webServer.send(200, "text/html", s);
+}
+
 void handleNotFound() {
   webServer.send(404, "text/plain", "Not found.");
 }
@@ -91,6 +100,7 @@ void setup() {
   Serial.println(WiFi.localIP());
 
   webServer.on("/messages", handleMessages);
+  webServer.on("/", handleIndex);
   webServer.onNotFound(handleNotFound);
   webServer.begin();
   Serial.println("Web server started.");

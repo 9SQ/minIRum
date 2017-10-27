@@ -2,6 +2,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <IRremoteESP8266.h>
+#include <IRsend.h>
+#include <IRrecv.h>
 #include <aJSON.h>
 
 const int send_pin = 12;
@@ -27,13 +29,13 @@ void handleMessages() {
       aJsonObject* freq = aJson.getObjectItem(root, "freq");
       aJsonObject* data = aJson.getObjectItem(root, "data");
       if (freq != NULL && data != NULL) {
-        const int d_size = aJson.getArraySize(data);
-        unsigned int rawData[d_size];
+        const uint16_t d_size = aJson.getArraySize(data);
+        uint16_t rawData[d_size];
         for (int i = 0; i < d_size; i++) {
           aJsonObject* d_int = aJson.getArrayItem(data, i);
           rawData[i] = d_int->valueint;
         }
-        irsend.sendRaw(rawData, d_size, freq->valueint);
+        irsend.sendRaw(rawData, d_size, (uint16_t)freq->valueint);
         irrecv.enableIRIn();
         req = "";
         aJson.deleteItem(root);
@@ -70,7 +72,7 @@ void handleNotFound() {
 String dumpIRcode (decode_results *results) {
   String s = "";
   for (int i = 1;  i < results->rawlen;  i++) {
-    s += results->rawbuf[i] * USECPERTICK;
+    s += results->rawbuf[i] * RAWTICK;
     if ( i < results->rawlen - 1 ) s += ",";
   }
   return s;

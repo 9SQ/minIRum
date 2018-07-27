@@ -11,6 +11,8 @@
 
 #define SEND_PIN 12
 #define RECV_PIN 14
+#define TIMEOUT MAX_TIMEOUT_MS
+#define CAPTURE_BUFFER_SIZE 1024
 
 char* localName = "minirum-";
 String ssid = "";
@@ -24,7 +26,7 @@ String ssidList;
 
 ESP8266WebServer webServer(80);
 IRsend irsend(SEND_PIN);
-IRrecv irrecv(RECV_PIN);
+IRrecv irrecv(RECV_PIN, CAPTURE_BUFFER_SIZE, TIMEOUT, true);
 
 String dumpIRcode (decode_results *results) {
   String s = "";

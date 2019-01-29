@@ -87,4 +87,4 @@ Access-Control-Allow-Origin: *
 
 * [Arduino core for ESP8266 WiFi chip](https://github.com/esp8266/Arduino) <= **2.3.0**
 * [aJson](https://github.com/interactive-matter/aJson) == v1.5
-* [IRremoteESP8266](https://github.com/markszabo/IRremoteESP8266) >= v2.4.2
+* [IRremoteESP8266](https://github.com/markszabo/IRremoteESP8266) >= v2.5.0

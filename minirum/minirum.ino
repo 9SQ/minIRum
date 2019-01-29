@@ -11,7 +11,7 @@
 
 #define SEND_PIN 12
 #define RECV_PIN 14
-#define TIMEOUT MAX_TIMEOUT_MS
+#define TIMEOUT kMaxTimeoutMs
 #define CAPTURE_BUFFER_SIZE 1024
 
 char* localName = "minirum-";
